@@ -99,14 +99,16 @@ var TaskRunner = {
 		if(filename.indexOf(this.COMPONENT_NAME) >=0)
 		{
 			var folderPath = abspath.substring(0,abspath.lastIndexOf('/'));
-			var fileExtension = filename.substring(filename.lastIndexOf('.'),filename.length);
-			console.log(folderPath + '/' + name + fileExtension);
+			var fileExtension = filename.substring(filename.indexOf('.'),filename.length);
+			console.log('creating', folderPath + '/' + name + fileExtension);
 			grunt.file.copy(abspath, folderPath + '/' + name + fileExtension);
+			console.warn('deleting',abspath);
+			grunt.file.delete(abspath);
 		}
 	},
 	register: function () {
 		grunt.registerTask('renameFiles', this.renameFiles.bind(this));
-		grunt.registerTask('rename', ['renameFiles']);
+		grunt.registerTask('rename', ['renameFiles','replace:name']);
 		grunt.registerTask('serve', ['open','connect','watch']);
 		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);
