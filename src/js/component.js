@@ -1,6 +1,6 @@
 (function (){
 	var Component = {
-		is:"example-component"
+		is:"seed-component"
 	};
 
 	Polymer(Component);	
