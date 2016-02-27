@@ -85,8 +85,28 @@ var TaskRunner = {
 		grunt.loadNpmTasks('grunt-shell-spawn');
 		grunt.loadNpmTasks('grunt-open');
 	},
+	renameFiles: function () {
+		
+		var name = grunt.option('name');
+		if(!name)
+		{
+			grunt.fail.fatal('No name specified', 1);
+		}
+		grunt.file.recurse(path.resolve('./'), this.onFile.bind(this));
+	},
+	onFile: function (abspath, rootdir, subdir, filename) {
+		var name = grunt.option('name');
+		if(filename.indexOf(this.COMPONENT_NAME) >=0)
+		{
+			var folderPath = abspath.substring(0,abspath.lastIndexOf('/'));
+			var fileExtension = filename.substring(filename.lastIndexOf('.'),filename.length);
+			console.log(folderPath + '/' + name + fileExtension);
+			grunt.file.copy(abspath, folderPath + '/' + name + fileExtension);
+		}
+	},
 	register: function () {
-		grunt.registerTask('rename', ['replace:name']);
+		grunt.registerTask('renameFiles', this.renameFiles.bind(this));
+		grunt.registerTask('rename', ['renameFiles']);
 		grunt.registerTask('serve', ['open','connect','watch']);
 		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);

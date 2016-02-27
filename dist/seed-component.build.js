@@ -7588,6 +7588,6 @@ this.fire('dom-change');
 }
 });
 (function () {
-var Component = { is: 'seed-component' };
+var Component = { is: 'example-component' };
 Polymer(Component);
 }());
