@@ -1,0 +1,21 @@
+{
+  "name": "polymer-component-seed",
+  "description": "This is a polymer component seed which you can use to build your polymer component",
+  "main": "index.js",
+  "authors": [
+    "Fahim Chowdhury <fahim.chowdhury1985@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/fahimc/polymer-component-seed",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0"
+  }
+}
