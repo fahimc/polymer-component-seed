@@ -17,10 +17,8 @@ var TaskRunner = {
 					}]
 				},
 				files: [{
-					cwd: project,
 					expand: true,
-					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!**/node_modules/**'],
-					dest: project
+					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!node_modules/**']
 				}]
 			}
 		},
@@ -83,7 +81,7 @@ var TaskRunner = {
 		grunt.loadNpmTasks('grunt-contrib-connect');
 		grunt.loadNpmTasks('grunt-contrib-clean');
 		grunt.loadNpmTasks('grunt-contrib-copy');
-		grunt.loadNpmTasks('grunt-contrib-replace');
+		grunt.loadNpmTasks('grunt-replace');
 		grunt.loadNpmTasks('grunt-shell-spawn');
 		grunt.loadNpmTasks('grunt-open');
 	},
