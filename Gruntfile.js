@@ -6,6 +6,24 @@ var TaskRunner = {
 		shell: {
 			polybuild: {
 				command: 'polybuild src/<%= grunt.option(\'component_name\') %>.html'
+			},
+			pullMaster: {
+				command: 'git checkout master'
+			},
+			gitMerge: {
+				command: 'git merge develop'
+			},
+			getMergeWithMaster: {
+				command : 'git merge -s ours --no-commit master'
+			},
+			commitDevelopBranch: {
+				command: 'git commit -m "merged master"'
+			},
+			gitCommit: {
+				command: 'git add -A && git commit -m "merge and release from develop"'
+			},
+			gitPush: {
+				command: 'git push origin master'
 			}
 		},
 		replace: {
@@ -18,7 +36,31 @@ var TaskRunner = {
 				},
 				files: [{
 					expand: true,
-					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!node_modules/**']
+					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!node_modules/**', '!Gruntfile.js', '!package.json', '!bower.json']
+				}]
+			},
+			release: {
+				options: {
+					patterns: [{
+						match: /dist\//g,
+						replacement: ''
+					}]
+				},
+				files: [{
+					expand: true,
+					src: ['demo/index.html']
+				}]
+			},
+			releaseBuild: {
+				options: {
+					patterns: [{
+						match: /\.build\./g,
+						replacement: '.'
+					}]
+				},
+				files: [{
+					expand: true,
+					src: ['*.html']
 				}]
 			}
 		},
@@ -27,7 +69,13 @@ var TaskRunner = {
 				expand: true,
 				cwd: 'src',
 				src: '*.build.*',
-				dest: 'dist/',
+				dest: 'dist/'
+			},
+			dist: {
+				expand: true,
+				cwd: 'dist',
+				src: '*',
+				dest: ''
 			}
 		},
 		clean: {
@@ -36,6 +84,12 @@ var TaskRunner = {
 			},
 			src: {
 				src: 'src/*.build.*'
+			},
+			release: {
+				src: ['*','!dist/**','!demo/**','!bower_components/**','!node_modules/**', '!Gruntfile.js', '!package.json', '!bower.json']
+			},
+			releaseDist: {
+				src: ['dist']
 			}
 		},
 		connect: {
@@ -94,6 +148,14 @@ var TaskRunner = {
 		}
 		grunt.file.recurse(path.resolve('./'), this.onFile.bind(this));
 	},
+	renameBuild: function () {
+		grunt.file.recurse(path.resolve('./dist/'), this.onDistFile.bind(this));
+	},
+	onDistFile: function (abspath, rootdir, subdir, filename) {
+		var path = abspath.replace('.build','');
+		grunt.file.copy(abspath, path);
+		grunt.file.delete(abspath);
+	},
 	onFile: function (abspath, rootdir, subdir, filename) {
 		var name = grunt.option('name');
 		if(filename.indexOf(this.COMPONENT_NAME) >=0)
@@ -108,10 +170,12 @@ var TaskRunner = {
 	},
 	register: function () {
 		grunt.registerTask('renameFiles', this.renameFiles.bind(this));
+		grunt.registerTask('renameBuild', this.renameBuild.bind(this));
 		grunt.registerTask('rename', ['renameFiles','replace:name']);
 		grunt.registerTask('serve', ['open','connect','watch']);
-		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build','clean:src']);
+		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);
+		grunt.registerTask('release', ['shell:getMergeWithMaster','shell:commitDevelopBranch','shell:pullMaster', 'shell:gitMerge', 'dist','clean:release','copy:dist','clean:releaseDist','replace:release', 'replace:releaseBuild', 'shell:gitCommit']);
 	}
 
 };
