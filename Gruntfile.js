@@ -62,6 +62,18 @@ var TaskRunner = {
 					expand: true,
 					src: ['*.html']
 				}]
+			},
+			distBuild: {
+				options: {
+					patterns: [{
+						match: /\.build\./g,
+						replacement: '.'
+					}]
+				},
+				files: [{
+					expand: true,
+					src: ['dist/*.html']
+				}]
 			}
 		},
 		copy: {
@@ -173,7 +185,7 @@ var TaskRunner = {
 		grunt.registerTask('renameBuild', this.renameBuild.bind(this));
 		grunt.registerTask('rename', ['renameFiles','replace:name']);
 		grunt.registerTask('serve', ['open','connect','watch']);
-		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','clean:src']);
+		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','replace:distBuild','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);
 		grunt.registerTask('release', ['shell:getMergeWithMaster','shell:commitDevelopBranch','shell:pullMaster', 'shell:gitMerge', 'dist','clean:release','copy:dist','clean:releaseDist','replace:release', 'replace:releaseBuild', 'shell:gitCommit']);
 	}
