@@ -30,12 +30,12 @@ This will replace all instances of `seed-component` name in the project folder.
 
 # Folder Structure
 
--demo/ : This is where you create your demo. The index page is linked to `dist` folder files.  
--test/ : This is where you create your unit tests. 
--src/ : This is where your development code goes. 
-----js/ : This is for your script files 
-----style/ : This is for yout component css files. In the component html file I have added a style include which doesnt exist '-theme'. This is to all for custom theming.    
--dist/ : This is where grunt will create the distribution files  
+`demo/` : This is where you create your demo. The index page is linked to `dist` folder files.  
+`test/` : This is where you create your unit tests. 
+`src/` : This is where your development code goes.   
+`--js/` : This is for your script files   
+`--style`/ : This is for yout component css files. In the component html file I have added a style include which doesnt exist '-theme'. This is to all for custom theming.    
+`dist/` : This is where grunt will create the distribution files  
 
 # Component Development 
 
