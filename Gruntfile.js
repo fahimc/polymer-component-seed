@@ -115,7 +115,7 @@ var TaskRunner = {
 		},
 		watch: {
 			src: {
-				files: ['src/**'],
+				files: ['src/**','!src/*.build.*'],
 				options: { livereload: true },
 				tasks:['dist']
 			},
