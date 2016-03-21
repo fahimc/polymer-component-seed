@@ -34,8 +34,8 @@ This will replace all instances of `seed-component` name in the project folder.
 -test/ : This is where you create your unit tests. 
 -src/ : This is where your development code goes. 
 ----js/ : This is for your script files 
-----style/ : This is for yout component css files
--dist/ : This is where grunt will create the distribution files
+----style/ : This is for yout component css files. In the component html file I have added a style include which doesnt exist '-theme'. This is to all for custom theming.    
+-dist/ : This is where grunt will create the distribution files  
 
 # Component Development 
 
@@ -45,9 +45,9 @@ Run `grunt develop` and your browser should open localhost with your project. Na
 
 Once you want to push the files to the master branch ensure your develop branch is committed and run `grunt release` this will push only the distribution files and the demo page to master with the correct linkage to allow the demo page to work.
 
-#Grunt Tasks
+#Grunt Tasks  
 
-`grunt serve` : this will spin up a server
-`grunt dist` : this will create the distribution files
-`grunt develop` : to run a server, file watching, livereload and distribution creation as files change
-`grunt release` : release the component to the master branch
+`grunt develop` : to run a server, file watching, livereload and distribution creation as files change  
+`grunt serve` : this will spin up a server  
+`grunt dist` : this will create the distribution files  
+`grunt release` : release the component to the master branch  
