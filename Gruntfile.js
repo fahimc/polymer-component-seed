@@ -180,10 +180,16 @@ var TaskRunner = {
 			grunt.file.delete(abspath);
 		}
 	},
+	replaceInGruntFile: function () {
+      var content = grunt.file.read('Gruntfile.js');
+      content = content.replace("COMPONENT_NAME: 'seed-component',","COMPONENT_NAME: '" +  grunt.option("name") + "',"); 
+      grunt.file.write('Gruntfile.js',content);
+	},
 	register: function () {
 		grunt.registerTask('renameFiles', this.renameFiles.bind(this));
 		grunt.registerTask('renameBuild', this.renameBuild.bind(this));
-		grunt.registerTask('rename', ['renameFiles','replace:name']);
+		grunt.registerTask('replaceInGruntFile', this.replaceInGruntFile.bind(this));
+		grunt.registerTask('rename', ['renameFiles','replace:name','replaceInGruntFile']);
 		grunt.registerTask('serve', ['open','connect','watch']);
 		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','replace:distBuild','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);
