@@ -98,7 +98,7 @@ var TaskRunner = {
 				src: 'src/*.build.*'
 			},
 			release: {
-				src: ['*','!dist/**','!demo/**','!bower_components/**','!node_modules/**', '!Gruntfile.js', '!package.json', '!bower.json']
+				src: ['*', '!dist/**', '!demo/**', '!bower_components/**', '!node_modules/**', 'Gruntfile.js', '!README.md', '!package.json', '!bower.json']
 			},
 			releaseDist: {
 				src: ['dist']
@@ -180,6 +180,21 @@ var TaskRunner = {
 			grunt.file.delete(abspath);
 		}
 	},
+	force: function(set)
+  {
+    if (set === "on")
+    {
+      grunt.option("force", true);
+    }
+    else if (set === "off")
+    {
+      grunt.option("force", false);
+    }
+    else if (set === "restore")
+    {
+      grunt.option("force", previous_force_state);
+    }
+  },
 	replaceInGruntFile: function () {
       var content = grunt.file.read('Gruntfile.js');
       content = content.replace("COMPONENT_NAME: 'seed-component',","COMPONENT_NAME: '" +  grunt.option("name") + "',"); 
@@ -188,12 +203,13 @@ var TaskRunner = {
 	register: function () {
 		grunt.registerTask('renameFiles', this.renameFiles.bind(this));
 		grunt.registerTask('renameBuild', this.renameBuild.bind(this));
+		grunt.registerTask('force', this.force.bind(this));
 		grunt.registerTask('replaceInGruntFile', this.replaceInGruntFile.bind(this));
 		grunt.registerTask('rename', ['renameFiles','replace:name','replaceInGruntFile']);
 		grunt.registerTask('serve', ['open','connect','watch']);
 		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','replace:distBuild','clean:src']);
 		grunt.registerTask('develop', ['dist', 'serve']);
-		grunt.registerTask('release', ['shell:getMergeWithMaster','shell:commitDevelopBranch','shell:pullMaster', 'shell:gitMerge', 'dist','clean:release','copy:dist','clean:releaseDist','replace:release', 'replace:releaseBuild', 'shell:gitCommit']);
+		grunt.registerTask('release', ['shell:getMergeWithMaster', 'force:on', 'shell:commitDevelopBranch', 'force:off', 'shell:pullMaster', 'shell:gitMerge', 'dist', 'clean:release', 'copy:dist', 'clean:releaseDist', 'replace:release', 'replace:releaseBuild', 'shell:gitCommit', 'shell:gitPush']);
 	}
 
 };
