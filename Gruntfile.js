@@ -36,7 +36,7 @@ var TaskRunner = {
 				},
 				files: [{
 					expand: true,
-					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!node_modules/**', '!Gruntfile.js', '!package.json', '!bower.json']
+					src: ['**/*.{html,xhtml,htm,js,css}', '!bower_components/**', '!node_modules/**', 'Gruntfile.js', '!package.json', '!bower.json']
 				}]
 			},
 			release: {
