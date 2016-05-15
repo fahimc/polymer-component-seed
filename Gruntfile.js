@@ -83,10 +83,16 @@ var TaskRunner = {
 				src: '*.build.*',
 				dest: 'dist/'
 			},
+			resource: {
+                expand: true,
+                cwd: 'src',
+                src: 'resource/**/*',
+                dest: 'dist'
+            },
 			dist: {
 				expand: true,
 				cwd: 'dist',
-				src: '*',
+				src: '**',
 				dest: ''
 			}
 		},
@@ -98,7 +104,7 @@ var TaskRunner = {
 				src: 'src/*.build.*'
 			},
 			release: {
-				src: ['*', '!dist/**', '!demo/**', '!bower_components/**', '!node_modules/**', 'Gruntfile.js', '!README.md', '!package.json', '!bower.json']
+				src: ['*', '!dist/**', '!demo/**', '!resource/**','!bower_components/**', '!node_modules/**', 'Gruntfile.js', '!README.md', '!package.json', '!bower.json']
 			},
 			releaseDist: {
 				src: ['dist']
@@ -207,7 +213,7 @@ var TaskRunner = {
 		grunt.registerTask('replaceInGruntFile', this.replaceInGruntFile.bind(this));
 		grunt.registerTask('rename', ['renameFiles','replace:name','replaceInGruntFile']);
 		grunt.registerTask('serve', ['open','connect','watch']);
-		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','replace:distBuild','clean:src']);
+		grunt.registerTask('dist', ['shell:polybuild', 'clean:dist', 'copy:build', 'renameBuild','replace:distBuild','clean:src','copy:resource']);
 		grunt.registerTask('develop', ['dist', 'serve']);
 		grunt.registerTask('release', ['shell:getMergeWithMaster', 'force:on', 'shell:commitDevelopBranch', 'force:off', 'shell:pullMaster', 'shell:gitMerge', 'dist', 'clean:release', 'copy:dist', 'clean:releaseDist', 'replace:release', 'replace:releaseBuild', 'shell:gitCommit', 'shell:gitPush']);
 	}
