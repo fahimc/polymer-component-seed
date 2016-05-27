@@ -51,3 +51,24 @@ Once you want to push the files to the master branch ensure your develop branch 
 `grunt serve` : this will spin up a server  
 `grunt dist` : this will create the distribution files  
 `grunt release` : release the component to the master branch  
+
+#Usage  
+
+Check out the demo page to see the usage.   
+Below is a few examples:
+
+##Example
+
+```html
+<polymer-component-seed></polymer-component-seed>
+```
+
+###Attributes
+
+| name  | values | description  |  
+|---|---|---|  
+|`tracking-tag`| String| This will be the tracking tag for the link|   
+|`title`| String| This will be the title string for the component|  
+|`description`| String| This will be the body copy for the component|  
+|`link-title`| String| This will be the link text for the component|  
+|`link`| String| This will be the link for the component|  
