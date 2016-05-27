@@ -67,13 +67,8 @@ Below is a few examples:
 
 | name  | values | description  |  
 |---|---|---|  
-| `light`| none| this will set the theme to the light theme|  
-|`short`| none| this will set the component to the short version| 
 |`tracking-tag`| String| This will be the tracking tag for the link|   
 |`title`| String| This will be the title string for the component|  
 |`description`| String| This will be the body copy for the component|  
 |`link-title`| String| This will be the link text for the component|  
 |`link`| String| This will be the link for the component|  
-|`background-desktop`| String| This be will be the path for the desktop version of the background image|  
-|`background-tablet`| String| This be will be the path for the tablet version of the background image|  
-|`background-mobile`| String| This be will be the path for the mobile version of the background image|  
