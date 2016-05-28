@@ -1,7 +1,11 @@
-(function (){
-	var Component = {
-		is:"seed-component"
-	};
+(function() {
+  var Component = {
+    is: "seed-component",
+    properties: {},
+    ready: function() {}
+  };
 
-	Polymer(Component);	
+  window.addEventListener('WebComponentsReady', function(e) {
+    Polymer(Component);
+  });
 })();
